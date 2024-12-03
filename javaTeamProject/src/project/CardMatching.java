@@ -2,6 +2,9 @@ package project;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemListener;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -23,7 +26,7 @@ public class CardMatching extends JFrame {
 
     public CardMatching() {
         setTitle("카드 매칭 게임");
-        setSize(700, 700);
+        setSize(1000, 1000);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -73,6 +76,8 @@ public class CardMatching extends JFrame {
         buttonPanel.add(rankButton);
         buttonPanel.add(exitButton);
 
+        createMenu(); // 메뉴바 추가 (11/25)
+
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
         gbc.gridx = 0;
@@ -101,6 +106,46 @@ public class CardMatching extends JFrame {
             saveScoresToFile(GAME1_SCORE_FILE, game1Scores);
             saveScoresToFile(GAME2_SCORE_FILE, game2Scores);
         }));
+    }
+
+    private void createMenu(){
+        String name[] = {"menu.png", "start.png", "rank.png", "exit.png"};
+        JMenuBar menuBar = new JMenuBar();
+        JMenu menu = new JMenu("MENU");
+
+        JMenuItem menuItem[] = new JMenuItem[4];
+
+        for (int i=0;i<menuItem.length;i++){
+            ImageIcon menuIcon = new ImageIcon(Objects.requireNonNull(CardMatching.class.getResource("/resource/buttons/"+name[i])));
+            menuItem[i] = new JMenuItem(menuIcon);
+            menuItem[i].setIcon(new ImageIcon(menuIcon.getImage().getScaledInstance(80,50, Image.SCALE_SMOOTH)));
+
+             menuItem[i].setPreferredSize(new Dimension(80, 50));
+
+            menuItem[i].addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    JMenuItem item = (JMenuItem)e.getSource();
+                    if(item==menuItem[0]){
+                        cardLayout.show(mainPanel, "menu");
+                    }
+                    else if(item==menuItem[1]){
+                        cardLayout.show(mainPanel, "gameSelect");
+                    }
+                    else if(item==menuItem[2]){
+                        cardLayout.show(mainPanel, "rankSelect");
+                    }
+                    else if(item==menuItem[3]){
+                        System.exit(0);
+                    }
+
+                }
+            });
+            menu.add(menuItem[i]);
+        }
+
+        menuBar.add(menu);
+        setJMenuBar(menuBar);
     }
 
     private void loadScoresFromFile(String fileName, ArrayList<PlayerScore> scores) {
