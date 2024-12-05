@@ -76,7 +76,7 @@ public class CardMatching extends JFrame {
         buttonPanel.add(rankButton);
         buttonPanel.add(exitButton);
 
-        createMenu(); // 메뉴바 추가 (11/25)
+        /*createMenu(); // 메뉴바 추가 (11/25)*/
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
@@ -108,6 +108,7 @@ public class CardMatching extends JFrame {
         }));
     }
 
+/*
     private void createMenu(){
         String name[] = {"menu.png", "start.png", "rank.png", "exit.png"};
         JMenuBar menuBar = new JMenuBar();
@@ -147,6 +148,7 @@ public class CardMatching extends JFrame {
         menuBar.add(menu);
         setJMenuBar(menuBar);
     }
+*/
 
     private void loadScoresFromFile(String fileName, ArrayList<PlayerScore> scores) {
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
